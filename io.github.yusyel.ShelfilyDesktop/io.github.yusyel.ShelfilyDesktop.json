@@ -1,0 +1,57 @@
+{
+    "id": "io.github.yusyel.ShelfilyDesktop",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "48",
+    "sdk": "org.gnome.Sdk",
+    "sdk-extensions": [
+        "org.freedesktop.Sdk.Extension.rust-stable"
+    ],
+    "command": "shelfily-desktop",
+    "finish-args": [
+        "--share=network",
+        "--share=ipc",
+        "--socket=pulseaudio",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--device=dri"
+    ],
+    "build-options": {
+        "append-path": "/usr/lib/sdk/rust-stable/bin",
+        "env": {
+            "CARGO_NET_OFFLINE": "true"
+        }
+    },
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/man",
+        "/share/doc",
+        "/share/gtk-doc",
+        "/share/man",
+        "/share/pkgconfig",
+        "*.a",
+        "*.la"
+    ],
+    "modules": [
+        {
+            "name": "shelfily-desktop",
+            "builddir": true,
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/yusyel/shelfily-desktop.git",
+                    "commit": "c5a43361ca6f6f42aea33100791167db98967b99"
+                },
+                "cargo-sources.json",
+                {
+                    "type": "shell",
+                    "commands": [
+                        "mkdir -p .cargo",
+                        "cp -vf cargo/config .cargo/config.toml"
+                    ]
+                }
+            ]
+        }
+    ]
+}
